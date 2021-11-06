@@ -4,13 +4,25 @@ class Dec2Hex
 {
 
     public static int Arg1;
-
+    public static boolean isANumber (String value){
+        try {
+            double d = Integer.parseInt(value);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
     public static void main(String args[])
     {
+
 	if(args.length==0){
-		throw new Exception("No number provided!");
+        System.out.println("No value provided");
+        return;
 	}
-	System.out.println("number is type" + args[0].getType());
+    if(!isANumber(args[0])){
+        System.out.println(args[0] + "is not a number!");
+        return;
+    }
 	
         Arg1 = Integer.parseInt(args[0]);
         char ch[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
