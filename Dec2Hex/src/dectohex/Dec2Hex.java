@@ -1,8 +1,9 @@
+package dectohex;
+
 import java.util.Scanner;
 
 class Dec2Hex
 {
-
     public static int Arg1;
     public static boolean isANumber (String value){
         try {
@@ -12,15 +13,17 @@ class Dec2Hex
         }
         return true;
     }
+    Dec2Hex(){
+        
+    }
     public static void main(String args[])
     {
-
 	if(args.length==0){
-        System.out.println("No value provided");
-        return;
+            System.out.println("No value provided");
+            return;
 	}
     if(!isANumber(args[0])){
-        System.out.println(args[0] + "is not a number!");
+        System.out.println(args[0] + " is not a number!");
         return;
     }
 	
