@@ -50,9 +50,6 @@
     - name: 1. Get image from Dockerhub
       shell:
         cmd: docker pull stiefff/node-application:latest
-    - name: 1. Update packages
-      apt:
-        update_cache: yes
     - name: 2. Create a deployment
       shell:
         cmd: kubectl create deployment node-application --image=stiefff/node-application
