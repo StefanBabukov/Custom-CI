@@ -29,7 +29,12 @@
     - name: 8. Move Minikube
       shell:
         cmd: sudo mv minikube /usr/local/bin
-    - name: 9. Start Minikube
+
+- name: Start Minikube
+  hosts: localhost
+  user: ubuntu
+  tasks:
+    - name: Start Minikube
       shell:
         cmd: minikube start
 
