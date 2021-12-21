@@ -19,7 +19,7 @@
         cmd: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
     - name: 5. Install kubectl
       shell: 
-        cmd: sudo apt-get install -y kubectl 
+        cmd: apt-get install -y kubectl 
     - name: 6. Get minikube 
       shell:
         cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
