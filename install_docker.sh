@@ -25,3 +25,9 @@ sudo addgroup --system docker
 sudo adduser $USER docker
 
 newgrp docker
+
+sudo apt-get update
+
+sudo apt-get install -y libssl-dev libffi-dev python-dev python-pip
+
+sudo pip install ansible==2.9

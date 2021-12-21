@@ -33,29 +33,23 @@
       apt:
         name: python-docker
 
-- name: Start Minikube
-  hosts: localhost
-  user: ubuntu
-  tasks:
-    - name: Start Minikube
-      shell:
-        cmd: minikube start
-
 - name: Build application
   hosts: localhost
   user: ubuntu
-  become: yes
 
   tasks:
-    - name: 1. Get image from Dockerhub
+    - name: 1. Start Minikube
+      shell:
+        cmd: minikube start
+    - name: 2. Get image from Dockerhub
       shell:
         cmd: docker pull stiefff/node-application:latest
-    - name: 2. Create a deployment
+    - name: 3. Create a deployment
       shell:
         cmd: kubectl create deployment node-application --image=stiefff/node-application
-    - name: 3. Create a new service for the application
+    - name: 4. Create a new service for the application
       shell:
         cmd: kubectl expose deployment/node-application --type="NodePort" --port 8080 --name application-service
-    - name: 4. Scale deployment to 4 pods
+    - name: 5. Scale deployment to 4 pods
       shell:
         cmd: kubectl scale deployments/node-application --replicas=4
