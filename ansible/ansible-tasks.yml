@@ -1,0 +1,43 @@
+---
+- name: Install Dependencies and launch kubernetes
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: 1. Update packages
+      apt:
+        update_cache: yes 
+    - name: 2. Install apt-transport-https
+      apt:
+        name: apt-transport-https
+    - name: 3. Get apt-get from GCP
+      shell:
+        cmd: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    - name: 4. Append to kubernetes.list
+      shell: 
+        cmd: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+    - name: 5. Install kubectl
+      apt: name: kubectl
+    - name: 6. Get minikube 
+      shell:
+        cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    - name: 7. Grant permissions to minikube
+      shell:
+        cmd: chmod +x minikube
+    - name: 8. Move Minikube
+      shell:
+        cmd: sudo mv minikube /usr/local/bin
+    - name: 9. Start Minikube
+      shell:
+        cmd: minikube start
+
+- name: Build application
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: 1. Deploy image from Dockerhub to kubernetes
+      docker_image:
+        name: stiefff/node-application
