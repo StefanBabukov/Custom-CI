@@ -29,6 +29,9 @@
     - name: 8. Move Minikube
       shell:
         cmd: sudo mv minikube /usr/local/bin
+    - name: 9. Install python-docker
+      apt:
+        name: python-docker
 
 - name: Start Minikube
   hosts: localhost
@@ -45,8 +48,11 @@
 
   tasks:
     - name: 1. Get image from Dockerhub
-      docker_image:
-        name: stiefff/node-application
+      shell:
+        cmd: docker pull stiefff/node-application:latest
+    - name: 1. Update packages
+      apt:
+        update_cache: yes
     - name: 2. Create a deployment
       shell:
         cmd: kubectl create deployment node-application --image=stiefff/node-application
