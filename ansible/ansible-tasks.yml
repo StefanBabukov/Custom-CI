@@ -18,7 +18,8 @@
       shell: 
         cmd: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
     - name: 5. Install kubectl
-      apt: name: kubectl
+      apt: 
+        name: kubectl
     - name: 6. Get minikube 
       shell:
         cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
@@ -41,3 +42,11 @@
     - name: 1. Deploy image from Dockerhub to kubernetes
       docker_image:
         name: stiefff/node-application
+      shell:
+        cmd: kubectl create deployment node-application --image=stiefff/node-application
+    - name: 2. Create a new service for the application
+      shell:
+        cmd: kubectl expose deployment/node-application --type="NodePort" --port 8080 --name application-service
+    - name: 3. Scale deployment to 4 pods
+      shell:
+        cmd: kubectl scale deployments/node-application --replicas=4
