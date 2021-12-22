@@ -34,7 +34,7 @@ pipeline {
                 sh 'docker login -u stiefff -p $DOCKERHUB_CREDENTIALS'
             }
         }
-        }
+        
         stage('Push image to Docker Hub') {
             steps {
                 echo 'Pushing image....'
