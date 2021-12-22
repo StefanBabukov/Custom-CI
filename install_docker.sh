@@ -28,8 +28,10 @@ newgrp docker
 
 sudo apt-get update
 
-sudo apt install python-pip
+sudo apt -y install python-pip
 
-sudo apt-get install -y libssl-dev libffi-dev python-dev python-pip
+sudo apt-get -y install libssl-dev libffi-dev python-dev python-pip
 
 sudo pip install ansible==2.9
+
+docker run --rm -d -u root --name jenkins-container -p 8080:8080 -v ~/jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v "$HOME":/home jenkinsci/blueocean
