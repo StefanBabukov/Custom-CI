@@ -46,6 +46,7 @@ pipeline {
                 sshagent(['cwc2']){
                     echo 'Deploying....'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
+                    sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com docker pull stiefff/node-application'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com kubectl set image deployments/node-application node-application=stiefff/node-application:latest'
             }
         }
