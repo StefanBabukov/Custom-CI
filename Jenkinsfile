@@ -3,6 +3,9 @@ def app
 
 pipeline {
     agent any
+    environment{
+        DOCKERHUB_CREDENTIALS = credentials('91f105d7-0350-4090-9680-758f8140de30')
+    }
     stages {
         stage('Clone repository'){
             steps{
@@ -25,6 +28,13 @@ pipeline {
         //         }
         //     }
         // }
+        stage('Login to dockerhub'){
+            steps{
+                echo 'Logging in to dockerhub'
+                sh 'docker login -u stiefff -p $DOCKERHUB_CREDENTIALS'
+            }
+        }
+        }
         stage('Push image to Docker Hub') {
             steps {
                 echo 'Pushing image....'
