@@ -44,7 +44,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo 'Deploying....'
-                sh 'kubectl set image deployments/node-application node-application=stiefff/node-application:latest'
+                sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
+                sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com adminkubectl set image deployments/node-application node-application=stiefff/node-application:latest'
             }
         }
     }
