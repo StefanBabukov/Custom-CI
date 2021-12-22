@@ -12,7 +12,9 @@ pipeline {
         stage('Build image') {
             steps {
                 echo 'Building image..'
+                script{
                 app = docker.build("docker build -t stiefff/node-application")
+                }
             }
         }
         stage('Test image'){
