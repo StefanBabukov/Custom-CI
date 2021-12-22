@@ -12,20 +12,19 @@ pipeline {
         stage('Build image') {
             steps {
                 echo 'Building image..'
-                script{
-                app = docker.build("docker build -t stiefff/node-application")
-                }
+                sh 'docker build -t stiefff/node-application .'
+                
             }
         }
-        stage('Test image'){
-            steps{
-                script{
-            app.inside {
-                sh 'echo "Test has passed'
-            }
-                }
-            }
-        }
+        // stage('Test image'){
+        //     steps{
+        //         script{
+        //     app.inside {
+        //         sh 'echo "Test has passed'
+        //     }
+        //         }
+        //     }
+        // }
         stage('Push image to Docker Hub') {
             steps {
                 echo 'Pushing image....'
