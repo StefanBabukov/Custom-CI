@@ -15,7 +15,8 @@ pipeline {
         stage('Build image') {
             steps {
                 echo 'Building image..'
-                sh 'docker build -t stiefff/node-application .'
+                sh 'docker build -t stiefff/node-application:$BUILD_NUMBER .'
+                sh 'docker tag stiefff/node-application:$BUILD_NUMBER stiefff/node-application:latest'
                 
             }
         }
@@ -38,7 +39,8 @@ pipeline {
         stage('Push image to Docker Hub') {
             steps {
                 echo 'Pushing image....'
-                sh 'docker push stiefff/node-application'
+                sh 'docker push stiefff/node-application:$BUILD_NUMBER'
+                sh 'docker push stiefff/node-application:latest'
             }
         }
         stage('Deploy to Kubernetes') {
@@ -47,7 +49,7 @@ pipeline {
                     echo 'Deploying....'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com docker pull stiefff/node-application:latest'
-                    sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com kubectl set image deployments/node-application node-application=stiefff/node-application:latest'
+                    sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com kubectl set image deployments/node-application node-application=stiefff/node-application:$BUILD_NUMBER'
             }
         }
         }
