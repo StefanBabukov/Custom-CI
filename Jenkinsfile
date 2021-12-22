@@ -31,8 +31,8 @@ pipeline {
         stage('Login to dockerhub'){
             steps{
                 echo 'Logging in to dockerhub'
-                sh 'docker login -u stiefff --password-stdin $DOCKERHUB_CREDENTIALS'
-            }
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'            
+                }
         }
         
         stage('Push image to Docker Hub') {
