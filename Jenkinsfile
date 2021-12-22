@@ -5,6 +5,7 @@ pipeline {
     agent any
     environment{
         DOCKERHUB_CREDENTIALS = credentials('91f105d7-0350-4090-9680-758f8140de30')
+        SSH_CREDENTIALS = credentials('91f105d7-0350-4090-9680-758f8140de30')
     }
     stages {
         stage('Clone repository'){
@@ -43,10 +44,10 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sshagent(['e501485c-a4d1-43ba-937e-c57479db1a52']){
+                sshagent(credentials: ['e501485c-a4d1-43ba-937e-c57479db1a52']){
                     echo 'Deploying....'
-                    sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
-                    sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com adminkubectl set image deployments/node-application node-application=stiefff/node-application:latest'
+                    sh 'ssh -i $SSH_CREDENTIALS  ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
+                    sh 'ssh -i $SSH_CREDENTIALS ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com adminkubectl set image deployments/node-application node-application=stiefff/node-application:latest'
             }
         }
         }
