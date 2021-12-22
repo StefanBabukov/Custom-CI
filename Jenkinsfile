@@ -1,11 +1,25 @@
+
+def app
+
 pipeline {
     agent any
-
     stages {
+        stage('Clone repository'){
+            steps{
+            checkout scm
+            }
+        }
         stage('Build image') {
             steps {
                 echo 'Building image..'
-                sh 'docker build -t stiefff/node-application .'
+                app = docker.build("docker build -t stiefff/node-application")
+            }
+        }
+        stage('Test image'){
+            steps{
+            app.inside {
+                sh 'echo "Test has passed'
+            }
             }
         }
         stage('Push image to Docker Hub') {
