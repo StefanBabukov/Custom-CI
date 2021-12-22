@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                sshagent(credentials: ['admin']){
+                sshagent(['e501485c-a4d1-43ba-937e-c57479db1a52']){
                     echo 'Deploying....'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com echo "Hello!!!"'
                     sh 'ssh ubuntu@ec2-50-17-19-190.compute-1.amazonaws.com adminkubectl set image deployments/node-application node-application=stiefff/node-application:latest'
